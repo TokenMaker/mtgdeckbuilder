@@ -38,12 +38,24 @@ function AppContent() {
   const handleChatSend = useCallback(async (message: string) => {
     const token = user ? await getToken() ?? undefined : undefined;
     const deckSummary = getDeckSummary();
-    const newCards = await sendMessage(message, format, deckSummary, token);
-    if (newCards.length > 0) {
-      setCards(newCards);
+    const result = await sendMessage(message, format, deckSummary, token);
+
+    if (result.cards.length > 0) {
+      setCards(result.cards);
       setHasSearched(true);
     }
-  }, [format, sendMessage, getDeckSummary, user, getToken, setCards]);
+
+    // Auto-add all cards when AI builds a full deck list
+    if (result.isDeckBuild && result.cards.length > 0) {
+      let addedCount = 0;
+      for (const card of result.cards) {
+        const qty = (card as ScryfallCard & { _deckQuantity?: number })._deckQuantity ?? 1;
+        addCard(card, qty);
+        addedCount += qty;
+      }
+      showToast(`Added ${addedCount} cards to your deck!`);
+    }
+  }, [format, sendMessage, getDeckSummary, user, getToken, setCards, addCard]);
 
   const handleCardAdd = useCallback((card: ScryfallCard, quantity = 1) => {
     addCard(card, quantity);

@@ -4,44 +4,54 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const SYSTEM_PROMPT_TEMPLATE = `You are an expert Magic: The Gathering deck building assistant.
+const SYSTEM_PROMPT_TEMPLATE = `You are an expert Magic: The Gathering deck building collaborator.
+You help users find cards, build complete decks, analyze strategies, and improve their decks.
+
 ALWAYS respond in valid JSON with exactly this structure:
 {
-  "message": "Your conversational response here",
-  "scryfallQuery": "valid scryfall search query or null",
-  "action": "search | analyze | answer | suggest_quantity",
-  "suggestedQuantity": null,
-  "suggestedQuantityReasoning": null
+  "message": "Your conversational response — explain what you built, found, or recommend",
+  "action": "search | build_deck | analyze | answer",
+  "scryfallQuery": "a single scryfall query string, or null",
+  "deckList": null or an array of objects like: [{ "name": "Lightning Bolt", "quantity": 4 }, ...]
 }
 
-Scryfall syntax examples:
-- Format filter: format:modern, format:commander, format:standard
-- Color filter: c:r (red), c:u (blue), c:wub (white/blue/black)
-- Type filter: t:creature, t:instant, t:planeswalker
-- CMC filter: cmc<=2, cmc=3
-- Oracle text: o:"draw a card", o:"enters the battlefield"
-- Rarity: r:rare, r:common
-- Power/toughness: pow>=4, tou>=4
+WHEN TO USE deckList:
+- User asks to build a deck, generate a deck list, or create a deck
+- User asks "give me a deck", "build me a deck", "make a commander deck", etc.
+- User asks for a full list of cards for any archetype
+- Set action to "build_deck" when returning a deckList
+
+WHEN TO USE scryfallQuery:
+- User asks to search for or show specific cards
+- Use null when returning a deckList (the cards will be fetched by name)
+- Set action to "search" when returning a scryfallQuery
+
+DECK LIST RULES:
+- For Commander: provide exactly 99 cards (commander is separate). Include card name and quantity (all 1x for singleton).
+- For 60-card formats: provide exactly 60 cards total with appropriate quantities.
+- Always include lands (roughly 24 for 60-card, 36-38 for Commander).
+- Group logically: creatures, spells, ramp, draw, removal, lands.
+- Use real, legal Magic card names only.
+- Tailor the deck to the format and color identity specified.
+
+SCRYFALL SYNTAX (for scryfallQuery):
+- Format: format:modern, format:commander, format:standard
+- Color: c:r, c:ub, c:wubg
+- Type: t:creature, t:instant, t:land
+- CMC: cmc<=2, cmc=3
+- Oracle: o:"draw a card", o:"destroy target"
 - Combine: t:creature c:g cmc<=3 format:modern
 
 Current format: {{FORMAT}}
 Current deck: {{DECK_SUMMARY}}
-User tier: {{TIER}}
 
-Guidelines:
-- For card searches, provide a specific scryfallQuery that will find relevant cards
-- For deck analysis, examine the deck summary and provide strategic advice
-- For premium users: proactively analyze after each card add and suggest improvements
-- For free users: focus on the specific question asked
-- Always be helpful, specific, and knowledgeable about MTG strategy
-- When suggesting cards, explain WHY they fit the deck/format
-- Keep responses concise but informative`;
+Be enthusiastic, knowledgeable, and specific. When you build a deck, briefly explain the strategy.
+For deck lists, name real cards — no placeholder names.`;
 
-export async function getChatResponse({ message, format, deckSummary, tier = 'free', history = [] }) {
+export async function getChatResponse({ message, format, deckSummary, history = [] }) {
   const systemPrompt = SYSTEM_PROMPT_TEMPLATE
     .replace('{{FORMAT}}', format || 'Standard')
-    .replace('{{DECK_SUMMARY}}', deckSummary || 'Empty deck')
-    .replace('{{TIER}}', tier);
+    .replace('{{DECK_SUMMARY}}', deckSummary || 'Empty deck');
 
   const recentHistory = history.slice(-10);
   const messages = [
@@ -49,15 +59,12 @@ export async function getChatResponse({ message, format, deckSummary, tier = 'fr
       role: msg.role,
       content: msg.content,
     })),
-    {
-      role: 'user',
-      content: message,
-    },
+    { role: 'user', content: message },
   ];
 
   const response = await client.chat.completions.create({
-    model: 'gpt-4o',
-    max_tokens: 1024,
+    model: 'gpt-4o-mini',
+    max_tokens: 4096,
     response_format: { type: 'json_object' },
     messages: [
       { role: 'system', content: systemPrompt },
@@ -76,8 +83,7 @@ export async function getChatResponse({ message, format, deckSummary, tier = 'fr
       message: content,
       scryfallQuery: null,
       action: 'answer',
-      suggestedQuantity: null,
-      suggestedQuantityReasoning: null,
+      deckList: null,
     };
   }
 }

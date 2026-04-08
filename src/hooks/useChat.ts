@@ -7,23 +7,22 @@ export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   cards?: ScryfallCard[];
-  scryfallQuery?: string | null;
   action?: string;
-  suggestedQuantity?: number | null;
-  suggestedQuantityReasoning?: string | null;
+  isDeckBuild?: boolean;
   timestamp: Date;
+}
+
+export interface ChatResult {
+  cards: ScryfallCard[];
+  action: string;
+  isDeckBuild: boolean;
 }
 
 interface UseChatReturn {
   messages: ChatMessage[];
   loading: boolean;
   error: string | null;
-  sendMessage: (
-    message: string,
-    format: string,
-    deckSummary: string,
-    token?: string
-  ) => Promise<ScryfallCard[]>;
+  sendMessage: (message: string, format: string, deckSummary: string, token?: string) => Promise<ChatResult>;
   clearMessages: () => void;
 }
 
@@ -37,8 +36,8 @@ export function useChat(): UseChatReturn {
     format: string,
     deckSummary: string,
     token?: string
-  ): Promise<ScryfallCard[]> => {
-    if (!message.trim()) return [];
+  ): Promise<ChatResult> => {
+    if (!message.trim()) return { cards: [], action: 'answer', isDeckBuild: false };
 
     const userMsg: ChatMessage = {
       id: `user-${Date.now()}`,
@@ -51,7 +50,6 @@ export function useChat(): UseChatReturn {
     setLoading(true);
     setError(null);
 
-    // Build history from existing messages (last 10)
     const history = messages.slice(-10).map(m => ({
       role: m.role,
       content: m.content,
@@ -59,33 +57,35 @@ export function useChat(): UseChatReturn {
 
     try {
       const response = await chatApi.send({ message, format, deckSummary, history }, token);
+      const isDeckBuild = response.action === 'build_deck' && Array.isArray(response.cards) && response.cards.length > 0;
 
       const assistantMsg: ChatMessage = {
         id: `assistant-${Date.now()}`,
         role: 'assistant',
         content: response.message,
         cards: response.cards,
-        scryfallQuery: response.scryfallQuery,
         action: response.action,
-        suggestedQuantity: response.suggestedQuantity,
-        suggestedQuantityReasoning: response.suggestedQuantityReasoning,
+        isDeckBuild,
         timestamp: new Date(),
       };
 
       setMessages(prev => [...prev, assistantMsg]);
-      return response.cards || [];
+      return {
+        cards: response.cards || [],
+        action: response.action || 'answer',
+        isDeckBuild,
+      };
     } catch (err) {
       const errorText = err instanceof Error ? err.message : 'Failed to send message';
       setError(errorText);
 
-      const errorMsg: ChatMessage = {
+      setMessages(prev => [...prev, {
         id: `error-${Date.now()}`,
         role: 'assistant',
         content: `Sorry, I encountered an error: ${errorText}. Please check that the backend is running and your API key is configured.`,
         timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, errorMsg]);
-      return [];
+      }]);
+      return { cards: [], action: 'answer', isDeckBuild: false };
     } finally {
       setLoading(false);
     }

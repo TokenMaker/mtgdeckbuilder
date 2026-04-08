@@ -59,7 +59,9 @@ export function ChatMessage({ message, onCardChipClick }: ChatMessageProps) {
 
         {message.cards && message.cards.length > 0 && (
           <p className="text-xs mt-1.5 opacity-60">
-            {message.cards.length} card{message.cards.length !== 1 ? 's' : ''} found
+            {message.isDeckBuild
+              ? `✓ ${message.cards.length} cards added to your deck`
+              : `${message.cards.length} card${message.cards.length !== 1 ? 's' : ''} found`}
           </p>
         )}
       </div>
