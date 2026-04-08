@@ -1,5 +1,4 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import type { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent';
 import type { DeckCard } from '../../utils/formatRules';
 import { getManaCurveData } from '../../utils/cardGrouping';
 
@@ -19,7 +18,8 @@ export function ManaCurveChart({ mainboard }: ManaCurveChartProps) {
     );
   }
 
-  const formatter = (value: ValueType, _name: NameType): [ValueType, string] => [value, 'Cards'];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const formatter = (value: any) => [value ?? 0, 'Cards'] as [number, string];
 
   return (
     <div className="h-24">
