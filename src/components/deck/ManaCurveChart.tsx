@@ -1,13 +1,11 @@
-import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import type { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent';
 import type { DeckCard } from '../../utils/formatRules';
 import { getManaCurveData } from '../../utils/cardGrouping';
 
 interface ManaCurveChartProps {
   mainboard: Record<string, DeckCard>;
 }
-
-const BAR_COLOR = '#f59e0b';
 
 export function ManaCurveChart({ mainboard }: ManaCurveChartProps) {
   const data = getManaCurveData(mainboard);
@@ -20,6 +18,8 @@ export function ManaCurveChart({ mainboard }: ManaCurveChartProps) {
       </div>
     );
   }
+
+  const formatter = (value: ValueType, _name: NameType): [ValueType, string] => [value, 'Cards'];
 
   return (
     <div className="h-24">
@@ -46,7 +46,7 @@ export function ManaCurveChart({ mainboard }: ManaCurveChartProps) {
               fontSize: '12px',
               color: '#f4f4f5',
             }}
-            formatter={(value: number) => [value, 'Cards']}
+            formatter={formatter}
             labelFormatter={(label) => `CMC ${label}`}
           />
           <Bar dataKey="count" radius={[3, 3, 0, 0]}>

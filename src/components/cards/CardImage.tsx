@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { RefreshCw } from 'lucide-react';
 import type { ScryfallCard } from '../../utils/formatRules';
 import { getCardImageUri } from '../../utils/formatRules';

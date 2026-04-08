@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { X, Plus, Minus, BookOpen } from 'lucide-react';
 import type { ScryfallCard, Format } from '../../utils/formatRules';
 import { getLegalityStatus } from '../../utils/formatRules';

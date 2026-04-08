@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import type { GroupedCards } from '../../utils/cardGrouping';
 import type { ScryfallCard } from '../../utils/formatRules';

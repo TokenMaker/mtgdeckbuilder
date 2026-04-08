@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { X, Copy, Download, Check } from 'lucide-react';
 import { useDeckContext } from '../../context/DeckContext';
 import { exportDeck, copyToClipboard, downloadAsFile } from '../../utils/deckExport';

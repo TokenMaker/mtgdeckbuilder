@@ -1,4 +1,3 @@
-import React from 'react';
 import { X, Plus, Minus } from 'lucide-react';
 import type { DeckCard } from '../../utils/formatRules';
 import { getCardImageUri } from '../../utils/formatRules';

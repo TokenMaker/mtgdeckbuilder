@@ -1,4 +1,3 @@
-import React from 'react';
 import { Search } from 'lucide-react';
 import type { ScryfallCard, Format } from '../../utils/formatRules';
 import { CardThumbnail } from './CardThumbnail';

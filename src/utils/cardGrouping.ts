@@ -38,7 +38,7 @@ export interface GroupedCards {
 
 export function groupDeckCards(
   mainboard: Record<string, DeckCard>,
-  commanderId?: string
+  _commanderId?: string
 ): GroupedCards[] {
   const groups: Map<CardGroup, DeckCard[]> = new Map();
 

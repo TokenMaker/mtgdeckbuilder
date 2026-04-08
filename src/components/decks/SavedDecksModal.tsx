@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { X, FolderOpen, Trash2, Clock } from 'lucide-react';
 import { useAuth } from '../auth/AuthProvider';
 import { useDeckContext } from '../../context/DeckContext';

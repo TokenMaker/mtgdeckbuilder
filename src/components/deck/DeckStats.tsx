@@ -1,5 +1,5 @@
-import React from 'react';
-import type { DeckCard, ScryfallCard } from '../../utils/formatRules';
+import type { DeckCard } from '../../utils/formatRules';
+import type { ScryfallCard } from '../../utils/formatRules';
 import { getDeckColorCounts } from '../../utils/cardGrouping';
 
 interface DeckStatsProps {
@@ -26,7 +26,7 @@ const COLOR_TEXT: Record<string, string> = {
   C: 'text-white',
 };
 
-export function DeckStats({ mainboard, commander, validationErrors }: DeckStatsProps) {
+export function DeckStats({ mainboard, commander: _commander, validationErrors }: DeckStatsProps) {
   const colorCounts = getDeckColorCounts(mainboard);
   const totalColorCards = Object.values(colorCounts).reduce((s, v) => s + v, 0);
   const hasColors = totalColorCards > 0;

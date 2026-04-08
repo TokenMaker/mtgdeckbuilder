@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Save, Download, FolderOpen, LogIn, LogOut, User, Trash2, ChevronDown } from 'lucide-react';
 import { useDeckContext } from '../../context/DeckContext';
 import { useAuth } from '../auth/AuthProvider';
@@ -20,7 +20,6 @@ export function Header({ onSave, onExport, onMyDecks, onLogin, onClearDeck }: He
   const [nameValue, setNameValue] = useState(name);
   const [formatOpen, setFormatOpen] = useState(false);
 
-  const rules = FORMATS.find(f => f === format);
   const minSize = format === 'Commander' ? 100 : 60;
   const isValid = validationErrors.filter(e => e.type === 'error').length === 0 && totalCards >= minSize;
   const isOver = totalCards > (format === 'Commander' ? 100 : 60);

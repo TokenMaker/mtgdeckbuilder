@@ -1,4 +1,3 @@
-import React from 'react';
 import { Plus } from 'lucide-react';
 import type { ScryfallCard } from '../../utils/formatRules';
 import { getLegalityStatus, getCardImageUri } from '../../utils/formatRules';

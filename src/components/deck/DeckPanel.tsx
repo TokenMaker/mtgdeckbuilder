@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Trash2, BarChart2, List } from 'lucide-react';
 import { useDeckContext } from '../../context/DeckContext';
 import { groupDeckCards } from '../../utils/cardGrouping';
