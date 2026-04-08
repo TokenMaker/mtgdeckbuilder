@@ -1,7 +1,7 @@
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 
-const client = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const SYSTEM_PROMPT_TEMPLATE = `You are an expert Magic: The Gathering deck building assistant.
@@ -43,7 +43,6 @@ export async function getChatResponse({ message, format, deckSummary, tier = 'fr
     .replace('{{DECK_SUMMARY}}', deckSummary || 'Empty deck')
     .replace('{{TIER}}', tier);
 
-  // Build message history for context (last 10 messages)
   const recentHistory = history.slice(-10);
   const messages = [
     ...recentHistory.map(msg => ({
@@ -56,31 +55,25 @@ export async function getChatResponse({ message, format, deckSummary, tier = 'fr
     },
   ];
 
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
+  const response = await client.chat.completions.create({
+    model: 'gpt-4o',
     max_tokens: 1024,
-    system: systemPrompt,
-    messages,
+    response_format: { type: 'json_object' },
+    messages: [
+      { role: 'system', content: systemPrompt },
+      ...messages,
+    ],
   });
 
-  const content = response.content[0];
-  if (content.type !== 'text') {
-    throw new Error('Unexpected response type from Claude');
-  }
+  const content = response.choices[0]?.message?.content;
+  if (!content) throw new Error('No response from OpenAI');
 
-  // Parse JSON response
   try {
-    // Strip markdown code blocks if present
-    let text = content.text.trim();
-    if (text.startsWith('```')) {
-      text = text.replace(/^```(?:json)?\n?/, '').replace(/\n?```$/, '');
-    }
-    return JSON.parse(text);
+    return JSON.parse(content);
   } catch (e) {
-    // Fallback: treat full response as message
-    console.error('Failed to parse Claude JSON response:', e.message);
+    console.error('Failed to parse OpenAI JSON response:', e.message);
     return {
-      message: content.text,
+      message: content,
       scryfallQuery: null,
       action: 'answer',
       suggestedQuantity: null,

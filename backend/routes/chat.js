@@ -12,10 +12,10 @@ router.post('/', optionalAuth, async (req, res) => {
     return res.status(400).json({ error: 'Message is required' });
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!process.env.OPENAI_API_KEY) {
     return res.status(503).json({
       error: 'AI service not configured',
-      message: 'The AI assistant requires an Anthropic API key. Please configure ANTHROPIC_API_KEY in backend/.env',
+      message: 'The AI assistant requires an OpenAI API key. Please configure OPENAI_API_KEY in backend/.env',
     });
   }
 
@@ -50,8 +50,8 @@ router.post('/', optionalAuth, async (req, res) => {
   } catch (error) {
     console.error('Chat error:', error);
 
-    if (error.message?.includes('API key')) {
-      return res.status(401).json({ error: 'Invalid Anthropic API key' });
+    if (error.message?.includes('API key') || error.status === 401) {
+      return res.status(401).json({ error: 'Invalid OpenAI API key' });
     }
 
     res.status(500).json({ error: 'Failed to get AI response', details: error.message });
