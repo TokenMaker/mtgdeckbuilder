@@ -1,0 +1,19 @@
+{
+  "name": "mtg-deck-builder-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "MTG AI Deck Builder Backend API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.36.3",
+    "@supabase/supabase-js": "^2.49.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "lru-cache": "^11.0.2"
+  }
+}
