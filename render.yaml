@@ -3,7 +3,7 @@ services:
     name: mtg-deck-builder-api
     runtime: node
     buildCommand: npm install --prefix backend
-    startCommand: node backend/server.js
+    startCommand: cd backend && node server.js
     envVars:
       - key: NODE_ENV
         value: production
