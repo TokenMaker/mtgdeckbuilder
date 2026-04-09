@@ -53,7 +53,7 @@ export function WinRateChart({ data }: WinRateChartProps) {
               fontSize: '12px',
               color: '#d4d4d8',
             }}
-            formatter={(value: number) => [`${value}%`, 'Win Rate']}
+            formatter={(value: any) => [`${value}%`, 'Win Rate']}
           />
           <Line
             type="monotone"
