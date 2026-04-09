@@ -6,6 +6,9 @@ import cors from 'cors';
 import chatRouter from './routes/chat.js';
 import decksRouter from './routes/decks.js';
 import scryfallRouter from './routes/scryfall.js';
+import metaRouter from './routes/meta.js';
+import matchesRouter from './routes/matches.js';
+import profileRouter from './routes/profile.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -48,6 +51,9 @@ app.get('/health', (req, res) => {
 app.use('/api/chat', chatRouter);
 app.use('/api/decks', decksRouter);
 app.use('/api/scryfall', scryfallRouter);
+app.use('/api/meta', metaRouter);
+app.use('/api/matches', matchesRouter);
+app.use('/api/profile', profileRouter);
 
 // 404 handler
 app.use((req, res) => {

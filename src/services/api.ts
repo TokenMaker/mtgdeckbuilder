@@ -52,6 +52,8 @@ export interface ChatResponse {
 export const chatApi = {
   send: (data: ChatRequest, token?: string) =>
     request<ChatResponse>('/api/chat', { method: 'POST', body: data, token }),
+  getUsage: (token: string) =>
+    request<{ messagesUsedToday: number; messagesLimit: number }>('/api/chat/usage', { token }),
 };
 
 // Scryfall
@@ -98,3 +100,98 @@ export const decksApi = {
 export async function checkBackendHealth(): Promise<{ status: string; services: Record<string, boolean> }> {
   return request('/health');
 }
+
+// Meta / Trending Decks
+export interface TrendingDeckEntry {
+  name: string;
+  quantity: number;
+}
+
+export interface TrendingDeck {
+  id: string;
+  name: string;
+  format: string;
+  archetype: string;
+  source: string;
+  source_url: string;
+  mainboard: TrendingDeckEntry[];
+  sideboard: TrendingDeckEntry[];
+  color_identity: string[];
+}
+
+export const metaApi = {
+  getTrending: (format?: string, source?: string) => {
+    const params = new URLSearchParams();
+    if (format) params.set('format', format);
+    if (source) params.set('source', source);
+    const qs = params.toString();
+    return request<TrendingDeck[]>(`/api/meta/trending${qs ? `?${qs}` : ''}`);
+  },
+  importDeck: (deck: TrendingDeck) =>
+    request<TrendingDeck>('/api/meta/import', { method: 'POST', body: deck }),
+};
+
+// Matches
+export interface MatchRecord {
+  id: string;
+  deck_id: string;
+  result: 'win' | 'loss' | 'draw';
+  opponent_archetype: string;
+  format: string;
+  notes: string;
+  played_at: string;
+}
+
+export const matchesApi = {
+  list: (deckId: string, token: string) =>
+    request<MatchRecord[]>(`/api/matches/${deckId}`, { token }),
+  create: (match: Partial<MatchRecord>, token: string) =>
+    request<MatchRecord>('/api/matches', { method: 'POST', body: match, token }),
+  delete: (id: string, token: string) =>
+    request<null>(`/api/matches/${id}`, { method: 'DELETE', token }),
+};
+
+// Profile
+export interface ProfileData {
+  username: string;
+  joined_at: string;
+  stats: {
+    totalDecks: number;
+    totalMatches: number;
+    wins: number;
+    losses: number;
+    draws: number;
+    favoriteFormat: string;
+  };
+  decks: Array<{
+    id: string;
+    name: string;
+    format: string;
+    card_count: number;
+    updated_at: string;
+    wins: number;
+    losses: number;
+    draws: number;
+  }>;
+  winRateHistory: Array<{
+    date: string;
+    winRate: number;
+    matchesPlayed: number;
+  }>;
+}
+
+export const profileApi = {
+  get: (username: string) =>
+    request<ProfileData>(`/api/profile/${encodeURIComponent(username)}`),
+};
+
+// Chat usage
+export interface ChatUsageData {
+  messagesUsedToday: number;
+  messagesLimit: number;
+}
+
+export const chatUsageApi = {
+  getUsage: (token: string) =>
+    request<ChatUsageData>('/api/chat/usage', { token }),
+};

@@ -27,11 +27,12 @@ WHEN TO USE scryfallQuery:
 - Set action to "search" when returning a scryfallQuery
 
 DECK LIST RULES:
+- CRITICAL: Only suggest cards that are LEGAL in {{FORMAT}}. Do not include banned or not-legal cards.
 - For Commander: provide exactly 99 cards (commander is separate). Include card name and quantity (all 1x for singleton).
 - For 60-card formats: provide exactly 60 cards total with appropriate quantities.
 - Always include lands (roughly 24 for 60-card, 36-38 for Commander).
 - Group logically: creatures, spells, ramp, draw, removal, lands.
-- Use real, legal Magic card names only.
+- Use real, legal Magic card names only. Verify legality before including.
 - Tailor the deck to the format and color identity specified.
 
 SCRYFALL SYNTAX (for scryfallQuery):
@@ -41,17 +42,70 @@ SCRYFALL SYNTAX (for scryfallQuery):
 - CMC: cmc<=2, cmc=3
 - Oracle: o:"draw a card", o:"destroy target"
 - Combine: t:creature c:g cmc<=3 format:modern
+- ALWAYS include format filter in scryfallQuery to match current format
 
-Current format: {{FORMAT}}
+FORMAT LOCK — Current format: {{FORMAT}}
+- Only suggest cards with legality status "legal" in {{FORMAT}}
+- For Standard: Only cards from the last 2-3 years of sets
+- For Modern: Sets from 2003 (8th Edition) onwards, non-banned
+- For Pioneer: Sets from Return to Ravnica (2012) onwards, non-banned
+- For Commander: Any card legal in Commander, respect commander's color identity
+- For Pauper: Commons only
+- For Legacy/Vintage: Nearly anything, but respect ban/restriction list
+
+META CONTEXT for {{FORMAT}}:
+{{META_CONTEXT}}
+
 Current deck: {{DECK_SUMMARY}}
 
+DECK ARCHETYPES DETECTED:
+{{ARCHETYPE_HINTS}}
+
 Be enthusiastic, knowledgeable, and specific. When you build a deck, briefly explain the strategy.
-For deck lists, name real cards — no placeholder names.`;
+For deck lists, name real cards — no placeholder names. Always double-check format legality.`;
+
+const META_CONTEXT = {
+  Standard: 'Top Standard archetypes: Domain Ramp, Esper Midrange, Azorius Soldiers, Mono-Red Aggro, Grixis Midrange.',
+  Modern: 'Top Modern archetypes: Murktide Regent (UR Tempo), Amulet Titan, Hammer Time (Affinity), Living End, Scam (BR Midrange), Yawgmoth Combo.',
+  Pioneer: 'Top Pioneer archetypes: Rakdos Midrange, Lotus Field Combo, Mono-Green Devotion, Amalia Combo, Azorius Spirits.',
+  Legacy: 'Top Legacy archetypes: UR Delver, Reanimator, Death & Taxes, Lands, Storm, Initiative.',
+  Vintage: 'Top Vintage archetypes: Blue Tinker, Paradoxical Outcome, Doomsday, Jeskai Control.',
+  Commander: 'Popular Commander strategies: Atraxa Superfriends, Krenko Goblins, Rhystic Study Control, Kenrith Combo, Zur Enchantments.',
+  Pauper: 'Top Pauper archetypes: Faeries (UB), Mono-Red Burn, Affinity, Tron, Golgari Gardens.',
+};
+
+function getArchetypeHints(deckSummary) {
+  const lower = (deckSummary || '').toLowerCase();
+  const hints = [];
+
+  if (lower.includes('lightning bolt') || lower.includes('goblin') || lower.includes('mono-red')) {
+    hints.push('Aggro/Burn elements detected');
+  }
+  if (lower.includes('brainstorm') || lower.includes('counterspell') || lower.includes('force of will')) {
+    hints.push('Blue Control/Tempo elements detected');
+  }
+  if (lower.includes('sol ring') || lower.includes('ramp') || lower.includes('cultivate')) {
+    hints.push('Ramp strategy detected');
+  }
+  if (lower.includes('tutor') || lower.includes('combo')) {
+    hints.push('Combo elements detected');
+  }
+  if (lower.includes('commander') || lower.includes('legendary')) {
+    hints.push('Commander-focused build detected');
+  }
+
+  return hints.length > 0 ? hints.join(', ') : 'No specific archetype detected yet';
+}
 
 export async function getChatResponse({ message, format, deckSummary, history = [] }) {
+  const metaContext = META_CONTEXT[format] || META_CONTEXT.Standard;
+  const archetypeHints = getArchetypeHints(deckSummary);
+
   const systemPrompt = SYSTEM_PROMPT_TEMPLATE
-    .replace('{{FORMAT}}', format || 'Standard')
-    .replace('{{DECK_SUMMARY}}', deckSummary || 'Empty deck');
+    .replace(/{{FORMAT}}/g, format || 'Standard')
+    .replace('{{META_CONTEXT}}', metaContext)
+    .replace('{{DECK_SUMMARY}}', deckSummary || 'Empty deck')
+    .replace('{{ARCHETYPE_HINTS}}', archetypeHints);
 
   const recentHistory = history.slice(-10);
   const messages = [
