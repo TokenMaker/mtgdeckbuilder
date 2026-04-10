@@ -48,8 +48,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signUp = async (email: string, password: string) => {
     if (!supabase) return { error: new Error('Auth not configured') };
-    const { error } = await supabase.auth.signUp({ email, password });
-    return { error: error as Error | null };
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: window.location.origin },
+    });
+    if (error) return { error: error as Error | null };
+    // Auto sign-in immediately after signup so the user doesn't need to confirm first
+    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+    return { error: signInError as Error | null };
   };
 
   const signOut = async () => {

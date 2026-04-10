@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, UserPlus } from 'lucide-react';
 import { useAuth } from './AuthProvider';
+import { useNavigate } from 'react-router-dom';
 
 interface SignupModalProps {
   onClose: () => void;
@@ -9,12 +10,12 @@ interface SignupModalProps {
 
 export function SignupModal({ onClose, onSwitchToLogin }: SignupModalProps) {
   const { signUp } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,26 +30,10 @@ export function SignupModal({ onClose, onSwitchToLogin }: SignupModalProps) {
     if (error) {
       setError(error.message);
     } else {
-      setSuccess(true);
+      onClose();
+      navigate('/builder');
     }
   };
-
-  if (success) {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={onClose}>
-        <div className="bg-zinc-900 border border-zinc-700 rounded-2xl w-full max-w-sm mx-4 p-8 text-center shadow-2xl" onClick={e => e.stopPropagation()}>
-          <div className="w-12 h-12 bg-green-400/15 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-green-400 text-2xl">✓</span>
-          </div>
-          <h3 className="text-zinc-100 font-bold mb-2" style={{ fontFamily: 'Cinzel, serif' }}>Check Your Email</h3>
-          <p className="text-sm text-zinc-400 mb-6">We sent a confirmation link to <span className="text-amber-400">{email}</span></p>
-          <button onClick={onClose} className="w-full bg-amber-500 hover:bg-amber-400 text-black font-semibold py-2.5 rounded-xl transition-colors">
-            Done
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={onClose}>
