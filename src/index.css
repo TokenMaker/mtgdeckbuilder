@@ -29,8 +29,8 @@ html, body {
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #09090b;
-  color: #f4f4f5;
+  background-color: #111317;
+  color: #e8dcc8;
 }
 
 body.overflow-hidden {

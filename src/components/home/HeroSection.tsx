@@ -8,104 +8,128 @@ export function HeroSection({ onSignup }: HeroSectionProps) {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-zinc-950 via-zinc-900 to-zinc-950">
-      {/* Ambient amber glow */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-amber-400/4 rounded-full blur-2xl" />
-      </div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Dark atmospheric background */}
+      <div
+        className="absolute inset-0"
+        style={{ background: 'linear-gradient(160deg, #1a1208 0%, #111317 40%, #0d0f12 100%)' }}
+      />
 
-      {/* Floating card fan */}
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:flex items-center justify-center w-80 h-96 pointer-events-none">
-        {[
-          { rotate: -15, translate: '-40px, 10px', z: 1, delay: '0s' },
-          { rotate: -7, translate: '-20px, 5px', z: 2, delay: '0.1s' },
-          { rotate: 0, translate: '0px, 0px', z: 3, delay: '0.2s' },
-          { rotate: 7, translate: '20px, 5px', z: 2, delay: '0.3s' },
-        ].map((card, i) => (
-          <div
-            key={i}
-            className="absolute w-44 h-60 rounded-xl border-2 border-amber-500/30 bg-gradient-to-br from-zinc-800 to-zinc-900 shadow-2xl"
-            style={{
-              transform: `rotate(${card.rotate}deg) translate(${card.translate})`,
-              zIndex: card.z,
-              animation: `float 3s ease-in-out infinite`,
-              animationDelay: card.delay,
-            }}
-          >
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-amber-500/10 to-transparent" />
-            <div className="absolute top-3 left-3 right-3 h-1.5 bg-amber-500/30 rounded-full" />
-            <div className="absolute bottom-8 left-3 right-3 h-20 bg-zinc-700/50 rounded-lg" />
-            <div className="absolute bottom-3 left-3 right-3 h-4 bg-amber-500/20 rounded" />
-          </div>
-        ))}
-      </div>
+      {/* Amber radial glow — upper center */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: '-10%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 700,
+          height: 500,
+          background: 'radial-gradient(ellipse, rgba(245,158,11,0.12) 0%, transparent 70%)',
+        }}
+      />
+
+      {/* Subtle noise texture overlay */}
+      <div
+        className="absolute inset-0 opacity-30 pointer-events-none"
+        style={{
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\' opacity=\'0.08\'/%3E%3C/svg%3E")',
+          backgroundSize: '256px',
+        }}
+      />
 
       {/* Hero content */}
-      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 pt-24 pb-16 text-center lg:text-left lg:mr-[340px]">
-        <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-full px-4 py-1.5 mb-6">
-          <span className="text-amber-400 text-xs font-semibold uppercase tracking-wider">
-            AI-Powered Deck Building
+      <div className="relative z-10 max-w-4xl mx-auto px-5 pt-28 pb-20 text-center">
+        {/* Eyebrow */}
+        <div className="inline-flex items-center gap-2 mb-7">
+          <span
+            className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+            style={{ color: '#ffc174', background: 'rgba(255,193,116,0.08)', border: '1px solid rgba(255,193,116,0.15)' }}
+          >
+            AI Powered Deck Building
           </span>
         </div>
 
+        {/* Headline */}
         <h1
-          className="text-5xl sm:text-6xl lg:text-7xl font-bold text-zinc-100 leading-tight mb-6"
-          style={{ fontFamily: 'Cinzel, serif' }}
+          className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-4"
+          style={{ color: '#e8dcc8', letterSpacing: '-0.02em' }}
         >
-          Build Better<br />
-          <span className="text-amber-400">Decks with AI</span>
+          Build Better Decks
         </h1>
+        <h2
+          className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-7"
+          style={{
+            background: 'linear-gradient(to right, #ffc174, #f59e0b)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            letterSpacing: '-0.02em',
+          }}
+        >
+          Build Better Decks
+        </h2>
 
-        <p className="text-lg text-zinc-400 leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0">
-          Your intelligent Magic: The Gathering companion. Chat with AI to discover cards, build optimized decks, track your win rates, and import trending meta decks — all in one place.
+        <p
+          className="text-lg max-w-xl mx-auto mb-10 leading-relaxed"
+          style={{ color: '#6b5f4a' }}
+        >
+          Optimize your synergy, master the mana curve, and dominate the meta with advanced algorithmic brewing.
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+        {/* CTAs */}
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <button
             onClick={onSignup}
-            className="px-8 py-3.5 bg-amber-500 hover:bg-amber-400 text-black font-bold text-base rounded-xl transition-colors shadow-lg shadow-amber-500/20"
+            className="px-8 py-3.5 text-sm font-bold rounded-xl transition-all"
+            style={{
+              background: 'linear-gradient(to right, #ffc174, #f59e0b)',
+              color: '#111317',
+              boxShadow: '0 8px 32px rgba(245,158,11,0.25)',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.boxShadow = '0 8px 40px rgba(245,158,11,0.4)')}
+            onMouseLeave={e => (e.currentTarget.style.boxShadow = '0 8px 32px rgba(245,158,11,0.25)')}
           >
             Start Brewing Free
           </button>
           <button
-            onClick={() => {
-              document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+            onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-8 py-3.5 text-sm font-semibold rounded-xl transition-all"
+            style={{
+              background: '#1a1c1f',
+              color: '#a09070',
+              border: '1px solid rgba(83,68,52,0.3)',
             }}
-            className="px-8 py-3.5 border border-zinc-700 hover:border-amber-500/50 text-zinc-300 hover:text-amber-400 font-semibold text-base rounded-xl transition-colors"
+            onMouseEnter={e => { e.currentTarget.style.color = '#ffc174'; e.currentTarget.style.borderColor = 'rgba(255,193,116,0.3)'; }}
+            onMouseLeave={e => { e.currentTarget.style.color = '#a09070'; e.currentTarget.style.borderColor = 'rgba(83,68,52,0.3)'; }}
           >
             See How It Works
           </button>
           <button
             onClick={() => navigate('/builder')}
-            className="px-8 py-3.5 text-zinc-500 hover:text-zinc-300 font-semibold text-base transition-colors"
+            className="px-8 py-3.5 text-sm font-medium transition-all rounded-xl"
+            style={{ color: '#4a4035' }}
+            onMouseEnter={e => (e.currentTarget.style.color = '#a09070')}
+            onMouseLeave={e => (e.currentTarget.style.color = '#4a4035')}
           >
-            Try Without Account &rarr;
+            Try Without Account →
           </button>
         </div>
 
-        <div className="mt-10 flex flex-wrap gap-6 justify-center lg:justify-start text-sm text-zinc-500">
-          <span className="flex items-center gap-1.5">
-            <span className="text-amber-400">&#10003;</span> Free to use
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="text-amber-400">&#10003;</span> 30,000+ cards
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="text-amber-400">&#10003;</span> All formats
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="text-amber-400">&#10003;</span> Real-time AI
-          </span>
+        {/* Trust bar */}
+        <div className="mt-12 flex flex-wrap gap-6 justify-center text-xs" style={{ color: '#3a3028' }}>
+          {['Free to use', '30,000+ cards', 'All 7 formats', 'Real-time AI'].map(item => (
+            <span key={item} className="flex items-center gap-1.5">
+              <span style={{ color: '#f59e0b' }}>✓</span> {item}
+            </span>
+          ))}
         </div>
       </div>
 
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: var(--transform) translateY(0px); }
-          50% { transform: var(--transform) translateY(-12px); }
-        }
-      `}</style>
+      {/* Bottom fade */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, transparent, #111317)' }}
+      />
     </section>
   );
 }

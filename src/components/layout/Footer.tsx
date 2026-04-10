@@ -1,65 +1,96 @@
 import { Link } from 'react-router-dom';
 
+const COLUMNS = [
+  {
+    heading: 'Product',
+    links: [
+      { label: 'Deck Builder', to: '/builder' },
+      { label: 'Meta Analysis', to: '/#trending' },
+      { label: 'Price Tracker', to: '/builder' },
+      { label: 'AI Assistant', to: '/builder' },
+    ],
+  },
+  {
+    heading: 'Resources',
+    links: [
+      { label: 'API Docs', to: '/' },
+      { label: 'Guides', to: '/' },
+      { label: 'Tournament Data', to: '/' },
+    ],
+  },
+  {
+    heading: 'Legal',
+    links: [
+      { label: 'Privacy Policy', to: '/' },
+      { label: 'Terms of Service', to: '/' },
+      { label: 'Fan Content Policy', to: '/' },
+    ],
+  },
+];
+
 export function Footer() {
   return (
-    <footer className="bg-zinc-950 border-t border-zinc-800 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer style={{ background: '#0d0f12', borderTop: '1px solid rgba(83,68,52,0.1)' }} className="py-16">
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2.5 mb-3">
-              <div className="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center">
-                <span className="text-black font-bold text-xs">MTG</span>
+            <Link to="/" className="flex items-center gap-2.5 mb-4">
+              <div
+                className="w-7 h-7 rounded flex items-center justify-center flex-shrink-0"
+                style={{ background: 'linear-gradient(135deg, #ffc174, #f59e0b)' }}
+              >
+                <span className="text-zinc-900 font-black text-xs" style={{ fontFamily: 'Cinzel, serif' }}>TA</span>
               </div>
               <span
-                className="font-bold text-zinc-100 text-lg"
-                style={{ fontFamily: 'Cinzel, serif' }}
+                className="font-bold text-sm uppercase tracking-widest"
+                style={{ fontFamily: 'Cinzel, serif', color: '#ffc174', letterSpacing: '0.1em' }}
               >
-                AI Deck Builder
+                The Technical Archivist
               </span>
+            </Link>
+            <p className="text-xs leading-relaxed max-w-xs" style={{ color: '#3a3028' }}>
+              The premier data-driven utility for the modern Magic: The Gathering strategist.
+            </p>
+          </div>
+
+          {/* Columns */}
+          {COLUMNS.map(col => (
+            <div key={col.heading}>
+              <h4
+                className="text-xs font-bold uppercase tracking-widest mb-4"
+                style={{ color: '#6b5f4a', letterSpacing: '0.1em' }}
+              >
+                {col.heading}
+              </h4>
+              <ul className="space-y-2.5">
+                {col.links.map(link => (
+                  <li key={link.label}>
+                    <Link
+                      to={link.to}
+                      className="text-xs transition-colors"
+                      style={{ color: '#3a3028' }}
+                      onMouseEnter={e => (e.currentTarget.style.color = '#a09070')}
+                      onMouseLeave={e => (e.currentTarget.style.color = '#3a3028')}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <p className="text-sm text-zinc-500 leading-relaxed max-w-xs">
-              Intelligent Magic: The Gathering deck building powered by AI. Build better decks, track your wins, explore the meta.
-            </p>
-          </div>
-
-          {/* Links */}
-          <div>
-            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3">
-              Navigation
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/" className="text-sm text-zinc-500 hover:text-amber-400 transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/builder" className="text-sm text-zinc-500 hover:text-amber-400 transition-colors">
-                  Deck Builder
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3">
-              Legal
-            </h4>
-            <p className="text-xs text-zinc-600 leading-relaxed">
-              MTG AI Deck Builder is unofficial fan content permitted under Wizards of the Coast Fan Content Policy. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast &copy; Wizards of the Coast LLC.
-            </p>
-          </div>
+          ))}
         </div>
 
-        <div className="mt-10 pt-6 border-t border-zinc-800/60 flex flex-col sm:flex-row justify-between items-center gap-2">
-          <p className="text-xs text-zinc-600">
-            &copy; {new Date().getFullYear()} MTG AI Deck Builder. All rights reserved.
+        {/* Bottom bar */}
+        <div
+          className="flex flex-col sm:flex-row justify-between items-center gap-2 pt-6 text-xs"
+          style={{ borderTop: '1px solid rgba(83,68,52,0.08)', color: '#2a2218' }}
+        >
+          <p>
+            &copy; {new Date().getFullYear()} The Technical Archivist. Portions of M:TG are property of Wizards of the Coast.
           </p>
-          <p className="text-xs text-zinc-700">
-            Card data provided by Scryfall
-          </p>
+          <p>Card data by Scryfall</p>
         </div>
       </div>
     </footer>
