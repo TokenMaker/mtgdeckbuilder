@@ -15,8 +15,14 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html, body {
   height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  min-height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -25,6 +31,9 @@ body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background-color: #09090b;
   color: #f4f4f5;
+}
+
+body.overflow-hidden {
   overflow: hidden;
 }
 
