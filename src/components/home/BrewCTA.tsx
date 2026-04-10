@@ -44,7 +44,7 @@ export function BrewCTA({ onSignup }: BrewCTAProps) {
                   <div key={step.num} className="flex gap-5 group">
                     <span
                       className="text-xs font-bold flex-shrink-0 w-7 pt-0.5"
-                      style={{ color: '#ffc174', fontFamily: 'Cinzel, serif' }}
+                      style={{ color: '#ffc174', fontFamily: 'Capriola, sans-serif' }}
                     >
                       {step.num}
                     </span>

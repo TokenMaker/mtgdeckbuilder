@@ -44,7 +44,7 @@ export function ExportModal({ onClose }: ExportModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-zinc-800 flex-shrink-0">
           <div>
-            <h2 className="text-base font-bold text-zinc-100" style={{ fontFamily: 'Cinzel, serif' }}>Export Deck</h2>
+            <h2 className="text-base font-bold text-zinc-100" style={{ fontFamily: 'Capriola, sans-serif' }}>Export Deck</h2>
             <p className="text-xs text-zinc-500 mt-0.5">{name} · {format}</p>
           </div>
           <button onClick={onClose} className="text-zinc-500 hover:text-zinc-300 transition-colors">

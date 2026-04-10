@@ -39,7 +39,7 @@ export function Header({ onSave, onExport, onMyDecks, onLogin, onClearDeck }: He
         <div className="w-7 h-7 bg-amber-500 rounded flex items-center justify-center">
           <span className="text-black font-bold text-xs">MTG</span>
         </div>
-        <span className="font-semibold text-zinc-200 hidden sm:block text-sm" style={{ fontFamily: 'Cinzel, serif' }}>
+        <span className="font-semibold text-zinc-200 hidden sm:block text-sm" style={{ fontFamily: 'Capriola, sans-serif' }}>
           AI Deck Builder
         </span>
       </div>

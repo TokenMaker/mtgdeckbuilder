@@ -49,7 +49,7 @@ export function DeckCard({ deck, isOwn }: DeckCardProps) {
       <div className="px-4 pb-4 pt-2">
         <h3
           className="font-bold text-zinc-100 text-sm truncate group-hover:text-amber-300 transition-colors"
-          style={{ fontFamily: 'Cinzel, serif', letterSpacing: '-0.01em' }}
+          style={{ fontFamily: 'Capriola, sans-serif', letterSpacing: '-0.01em' }}
         >
           {deck.name}
         </h3>

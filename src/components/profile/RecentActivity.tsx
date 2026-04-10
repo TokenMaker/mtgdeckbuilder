@@ -26,7 +26,7 @@ export function RecentActivity({ matches }: RecentActivityProps) {
   if (matches.length === 0) {
     return (
       <div className="bg-[#1e1f27] rounded-2xl p-5">
-        <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest mb-4" style={{ fontFamily: 'Cinzel, serif' }}>
+        <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest mb-4" style={{ fontFamily: 'Capriola, sans-serif' }}>
           Recent Activity
         </h3>
         <p className="text-sm text-zinc-600 text-center py-6">
@@ -38,7 +38,7 @@ export function RecentActivity({ matches }: RecentActivityProps) {
 
   return (
     <div className="bg-[#1e1f27] rounded-2xl p-5">
-      <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest mb-4" style={{ fontFamily: 'Cinzel, serif' }}>
+      <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest mb-4" style={{ fontFamily: 'Capriola, sans-serif' }}>
         Recent Activity
       </h3>
       <div className="space-y-1">

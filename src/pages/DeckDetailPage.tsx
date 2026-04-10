@@ -104,7 +104,7 @@ export function DeckDetailPage() {
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 mb-6">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-zinc-100 mb-1" style={{ fontFamily: 'Cinzel, serif' }}>
+              <h1 className="text-2xl font-bold text-zinc-100 mb-1" style={{ fontFamily: 'Capriola, sans-serif' }}>
                 {deck.name}
               </h1>
               <div className="flex items-center gap-3 text-sm text-zinc-500">
@@ -164,7 +164,7 @@ export function DeckDetailPage() {
 
         {/* Match log */}
         <div>
-          <h2 className="text-xl font-bold text-zinc-100 mb-4" style={{ fontFamily: 'Cinzel, serif' }}>
+          <h2 className="text-xl font-bold text-zinc-100 mb-4" style={{ fontFamily: 'Capriola, sans-serif' }}>
             Match Log
           </h2>
           {matches.length === 0 ? (

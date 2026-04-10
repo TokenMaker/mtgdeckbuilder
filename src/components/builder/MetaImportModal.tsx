@@ -73,7 +73,7 @@ export function MetaImportModal({ onClose, onImported }: MetaImportModalProps) {
         {/* Header */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-800">
           <div>
-            <h2 className="text-zinc-100 font-semibold" style={{ fontFamily: 'Cinzel, serif' }}>
+            <h2 className="text-zinc-100 font-semibold" style={{ fontFamily: 'Capriola, sans-serif' }}>
               Import Meta Deck
             </h2>
             <p className="text-xs text-zinc-500 mt-0.5">Trending decks from MTGTop8</p>

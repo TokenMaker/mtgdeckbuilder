@@ -146,6 +146,44 @@ router.get('/me', async (req, res) => {
   }
 });
 
+// PATCH /api/profile/me  — update username
+router.patch('/me', async (req, res) => {
+  const sb = getSupabase();
+  if (!sb) return res.status(503).json({ error: 'Database not configured' });
+
+  const token = req.headers.authorization?.replace('Bearer ', '');
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+  const { username } = req.body;
+  if (!username || typeof username !== 'string' || username.trim().length < 2) {
+    return res.status(400).json({ error: 'Username must be at least 2 characters' });
+  }
+  const clean = username.trim().replace(/[^a-zA-Z0-9_-]/g, '');
+  if (clean.length < 2) return res.status(400).json({ error: 'Username must contain letters, numbers, _ or -' });
+
+  try {
+    const { data: { user }, error } = await sb.auth.getUser(token);
+    if (error || !user) return res.status(401).json({ error: 'Invalid token' });
+
+    // Check uniqueness
+    const { data: users } = await sb.auth.admin.listUsers();
+    const taken = (users?.users || []).some(u =>
+      u.id !== user.id && u.user_metadata?.username === clean
+    );
+    if (taken) return res.status(409).json({ error: 'Username already taken' });
+
+    const { error: updateError } = await sb.auth.admin.updateUserById(user.id, {
+      user_metadata: { ...user.user_metadata, username: clean },
+    });
+    if (updateError) throw updateError;
+
+    res.json({ username: clean });
+  } catch (err) {
+    console.error('Profile PATCH /me error:', err.message);
+    res.status(500).json({ error: 'Failed to update profile', details: err.message });
+  }
+});
+
 // GET /api/profile/:username — public
 router.get('/:username', async (req, res) => {
   const sb = getSupabase();

@@ -71,7 +71,7 @@ export function DeckPanel({ onCardClick }: DeckPanelProps) {
       {/* Header */}
       <div className="flex items-center justify-between px-3 py-2.5 border-b border-zinc-800 flex-shrink-0">
         <div>
-          <p className="text-xs font-bold text-zinc-200 uppercase tracking-wider" style={{ fontFamily: 'Cinzel, serif' }}>
+          <p className="text-xs font-bold text-zinc-200 uppercase tracking-wider" style={{ fontFamily: 'Capriola, sans-serif' }}>
             Deck List
           </p>
           <p className={`text-xs font-semibold mt-0.5 ${

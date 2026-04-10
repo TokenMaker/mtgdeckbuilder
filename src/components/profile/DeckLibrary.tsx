@@ -17,7 +17,7 @@ export function DeckLibrary({ decks, isOwnProfile }: DeckLibraryProps) {
         <div className="w-16 h-16 rounded-2xl bg-[#292931] flex items-center justify-center mb-4">
           <Plus size={24} className="text-zinc-500" />
         </div>
-        <p className="text-zinc-400 font-semibold mb-1" style={{ fontFamily: 'Cinzel, serif' }}>
+        <p className="text-zinc-400 font-semibold mb-1" style={{ fontFamily: 'Capriola, sans-serif' }}>
           No Decks Yet
         </p>
         <p className="text-sm text-zinc-600 mb-6">
@@ -38,7 +38,7 @@ export function DeckLibrary({ decks, isOwnProfile }: DeckLibraryProps) {
   return (
     <div>
       <div className="flex items-center justify-between mb-5">
-        <h2 className="text-lg font-bold text-zinc-200" style={{ fontFamily: 'Cinzel, serif', letterSpacing: '-0.01em' }}>
+        <h2 className="text-lg font-bold text-zinc-200" style={{ fontFamily: 'Capriola, sans-serif', letterSpacing: '-0.01em' }}>
           Active Decks Archive
           <span className="ml-2 text-sm font-normal text-zinc-500">({decks.length})</span>
         </h2>

@@ -202,6 +202,12 @@ export const profileApi = {
     request<ProfileData>(`/api/profile/${encodeURIComponent(username)}`),
   getMe: (token: string) =>
     request<ProfileData>('/api/profile/me', { token }),
+  updateMe: (token: string, data: { username: string }) =>
+    request<{ username: string }>('/api/profile/me', {
+      method: 'PATCH',
+      token,
+      body: data,
+    }),
 };
 
 // Chat usage

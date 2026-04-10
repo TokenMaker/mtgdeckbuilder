@@ -14,7 +14,7 @@ export function WinRateChart({ data }: WinRateChartProps) {
   if (data.length < 2) {
     return (
       <div className="bg-[#1e1f27] rounded-2xl p-6">
-        <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest mb-4" style={{ fontFamily: 'Cinzel, serif' }}>
+        <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest mb-4" style={{ fontFamily: 'Capriola, sans-serif' }}>
           Win Rate Trend
         </h3>
         <div className="flex items-center justify-center h-28 text-zinc-600 text-sm">
@@ -27,7 +27,7 @@ export function WinRateChart({ data }: WinRateChartProps) {
   return (
     <div className="bg-[#1e1f27] rounded-2xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest" style={{ fontFamily: 'Cinzel, serif' }}>
+        <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest" style={{ fontFamily: 'Capriola, sans-serif' }}>
           Win Rate Trend
         </h3>
         <span className="text-xs text-zinc-500">By week</span>

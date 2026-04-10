@@ -26,13 +26,13 @@ export function ProfileHeader({ username, joinedAt, stats }: ProfileHeaderProps)
       <div className="flex items-start gap-5">
         {/* Avatar */}
         <div className="w-16 h-16 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center flex-shrink-0">
-          <span className="text-amber-400 font-bold text-xl" style={{ fontFamily: 'Cinzel, serif' }}>
+          <span className="text-amber-400 font-bold text-xl" style={{ fontFamily: 'Capriola, sans-serif' }}>
             {initials}
           </span>
         </div>
 
         <div className="flex-1 min-w-0">
-          <h1 className="text-2xl font-bold text-zinc-100" style={{ fontFamily: 'Cinzel, serif' }}>
+          <h1 className="text-2xl font-bold text-zinc-100" style={{ fontFamily: 'Capriola, sans-serif' }}>
             {username}
           </h1>
           <p className="text-sm text-zinc-500 mt-0.5">Joined {joined}</p>

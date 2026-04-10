@@ -45,7 +45,7 @@ export function HeroSection({ onSignup }: HeroSectionProps) {
             className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
             style={{ color: '#ffc174', background: 'rgba(255,193,116,0.08)', border: '1px solid rgba(255,193,116,0.15)' }}
           >
-            AI Powered Deck Building
+            Archivist V.Alpha
           </span>
         </div>
 
@@ -54,7 +54,7 @@ export function HeroSection({ onSignup }: HeroSectionProps) {
           className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-4"
           style={{ color: '#e8dcc8', letterSpacing: '-0.02em' }}
         >
-          Build Better Decks
+          AI Powered Deck Building
         </h1>
         <h2
           className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-7"

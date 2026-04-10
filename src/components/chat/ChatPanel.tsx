@@ -50,7 +50,7 @@ export function ChatPanel({ messages, loading, onSend, onCardChipClick }: ChatPa
           <Bot size={13} className="text-amber-400" />
         </div>
         <div>
-          <p className="text-xs font-bold text-zinc-200 uppercase tracking-wider" style={{ fontFamily: 'Cinzel, serif' }}>
+          <p className="text-xs font-bold text-zinc-200 uppercase tracking-wider" style={{ fontFamily: 'Capriola, sans-serif' }}>
             AI Assistant
           </p>
           <p className="text-xs text-zinc-600">Powered by Claude</p>
@@ -63,7 +63,7 @@ export function ChatPanel({ messages, loading, onSend, onCardChipClick }: ChatPa
           <div className="w-12 h-12 bg-amber-500/15 rounded-2xl flex items-center justify-center mb-3">
             <Bot size={22} className="text-amber-400" />
           </div>
-          <h3 className="text-zinc-300 font-semibold mb-1.5 text-sm" style={{ fontFamily: 'Cinzel, serif' }}>
+          <h3 className="text-zinc-300 font-semibold mb-1.5 text-sm" style={{ fontFamily: 'Capriola, sans-serif' }}>
             Your Deck Building Guide
           </h3>
           <p className="text-xs text-zinc-500 leading-relaxed max-w-[200px]">

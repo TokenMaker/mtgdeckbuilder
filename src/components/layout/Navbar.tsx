@@ -38,23 +38,17 @@ export function Navbar({ onLogin, onSignup }: NavbarProps) {
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center gap-2.5 flex-shrink-0 group"
+          className="flex items-center flex-shrink-0 group"
         >
-          <div
-            className="w-7 h-7 rounded flex items-center justify-center flex-shrink-0"
-            style={{ background: 'linear-gradient(135deg, #ffc174, #f59e0b)' }}
-          >
-            <span className="text-zinc-900 font-black text-xs" style={{ fontFamily: 'Cinzel, serif' }}>TA</span>
-          </div>
           <span
-            className="font-bold text-sm tracking-widest uppercase hidden sm:block"
+            className="font-bold text-sm tracking-widest uppercase"
             style={{
-              fontFamily: 'Cinzel, serif',
+              fontFamily: 'Capriola, sans-serif',
               color: '#ffc174',
               letterSpacing: '0.14em',
             }}
           >
-            The Technical Archivist
+            Archivist
           </span>
         </Link>
 
@@ -134,7 +128,7 @@ export function Navbar({ onLogin, onSignup }: NavbarProps) {
                   style={{ background: '#1a1c1f' }}
                 >
                   <div className="text-right hidden sm:block">
-                    <p className="text-xs font-bold uppercase tracking-wider" style={{ color: '#ffc174', fontFamily: 'Cinzel, serif', fontSize: '0.6rem' }}>
+                    <p className="text-xs font-bold uppercase tracking-wider" style={{ color: '#ffc174', fontFamily: 'Capriola, sans-serif', fontSize: '0.6rem' }}>
                       Archivist
                     </p>
                     <p className="text-xs truncate max-w-[80px]" style={{ color: '#a09070' }}>{username}</p>
@@ -143,7 +137,7 @@ export function Navbar({ onLogin, onSignup }: NavbarProps) {
                     className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
                     style={{ background: 'linear-gradient(135deg, #2a2418, #3a3020)', border: '1px solid rgba(255,193,116,0.3)' }}
                   >
-                    <span className="text-xs font-bold" style={{ color: '#ffc174', fontFamily: 'Cinzel, serif' }}>{initials}</span>
+                    <span className="text-xs font-bold" style={{ color: '#ffc174', fontFamily: 'Capriola, sans-serif' }}>{initials}</span>
                   </div>
                   <ChevronDown size={12} style={{ color: '#6b5f4a' }} />
                 </button>

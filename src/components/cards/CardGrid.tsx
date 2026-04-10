@@ -55,7 +55,7 @@ export function CardGrid({
         <div className="w-16 h-16 bg-amber-500/10 rounded-2xl flex items-center justify-center mb-4">
           <Search size={24} className="text-amber-500/60" />
         </div>
-        <h3 className="text-zinc-300 font-semibold mb-2" style={{ fontFamily: 'Cinzel, serif' }}>
+        <h3 className="text-zinc-300 font-semibold mb-2" style={{ fontFamily: 'Capriola, sans-serif' }}>
           Find Your Cards
         </h3>
         <p className="text-sm text-zinc-500 max-w-xs leading-relaxed">

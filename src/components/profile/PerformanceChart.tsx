@@ -22,7 +22,7 @@ export function PerformanceChart({ data }: PerformanceChartProps) {
     return (
       <div className="bg-[#1e1f27] rounded-2xl p-6">
         <div className="flex items-center justify-between mb-1">
-          <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest" style={{ fontFamily: 'Cinzel, serif' }}>
+          <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest" style={{ fontFamily: 'Capriola, sans-serif' }}>
             Performance Matrix
           </h3>
         </div>
@@ -38,7 +38,7 @@ export function PerformanceChart({ data }: PerformanceChartProps) {
   return (
     <div className="bg-[#1e1f27] rounded-2xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest" style={{ fontFamily: 'Cinzel, serif' }}>
+        <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest" style={{ fontFamily: 'Capriola, sans-serif' }}>
           Performance Matrix
         </h3>
         <span className="text-xs text-zinc-500">Weekly win rate</span>

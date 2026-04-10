@@ -39,7 +39,7 @@ export function SignupModal({ onClose, onSwitchToLogin }: SignupModalProps) {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={onClose}>
       <div className="bg-zinc-900 border border-zinc-700 rounded-2xl w-full max-w-sm mx-4 shadow-2xl" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between p-5 border-b border-zinc-800">
-          <h2 className="text-base font-bold text-zinc-100" style={{ fontFamily: 'Cinzel, serif' }}>Create Account</h2>
+          <h2 className="text-base font-bold text-zinc-100" style={{ fontFamily: 'Capriola, sans-serif' }}>Create Account</h2>
           <button onClick={onClose} className="text-zinc-500 hover:text-zinc-300 transition-colors">
             <X size={18} />
           </button>

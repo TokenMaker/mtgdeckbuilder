@@ -35,18 +35,12 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
           <div>
-            <Link to="/" className="flex items-center gap-2.5 mb-4">
-              <div
-                className="w-7 h-7 rounded flex items-center justify-center flex-shrink-0"
-                style={{ background: 'linear-gradient(135deg, #ffc174, #f59e0b)' }}
-              >
-                <span className="text-zinc-900 font-black text-xs" style={{ fontFamily: 'Cinzel, serif' }}>TA</span>
-              </div>
+            <Link to="/" className="flex items-center mb-4">
               <span
                 className="font-bold text-sm uppercase tracking-widest"
-                style={{ fontFamily: 'Cinzel, serif', color: '#ffc174', letterSpacing: '0.1em' }}
+                style={{ fontFamily: 'Capriola, sans-serif', color: '#ffc174', letterSpacing: '0.1em' }}
               >
-                The Technical Archivist
+                Archivist
               </span>
             </Link>
             <p className="text-xs leading-relaxed max-w-xs" style={{ color: '#3a3028' }}>
@@ -88,7 +82,7 @@ export function Footer() {
           style={{ borderTop: '1px solid rgba(83,68,52,0.08)', color: '#2a2218' }}
         >
           <p>
-            &copy; {new Date().getFullYear()} The Technical Archivist. Portions of M:TG are property of Wizards of the Coast.
+            &copy; {new Date().getFullYear()} Archivist. Portions of M:TG are property of Wizards of the Coast.
           </p>
           <p>Card data by Scryfall</p>
         </div>
