@@ -37,14 +37,6 @@ export function CardGrid({
   onLoadMore,
   hasSearched,
 }: CardGridProps) {
-  // Determine zoom origin per column position in a 3-col grid
-  function getPosition(index: number): 'left' | 'center' | 'right' {
-    const col = index % 3;
-    if (col === 0) return 'left';
-    if (col === 1) return 'center';
-    return 'right';
-  }
-
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-center px-6 py-12">
@@ -88,12 +80,11 @@ export function CardGrid({
       {/* Grid */}
       <div className="flex-1 overflow-y-auto pr-1">
         <div className="grid grid-cols-3 gap-3 pb-4">
-          {cards.map((card, i) => (
+          {cards.map((card) => (
             <CardThumbnail
               key={card.id}
               card={card}
               format={format}
-              position={getPosition(i)}
               onClick={() => onCardClick(card)}
               onAdd={() => onCardAdd(card)}
             />

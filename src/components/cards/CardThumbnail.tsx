@@ -6,7 +6,6 @@ import type { Format } from '../../utils/formatRules';
 interface CardThumbnailProps {
   card: ScryfallCard;
   format: Format;
-  position: 'left' | 'center' | 'right';
   onClick: () => void;
   onAdd: () => void;
 }
@@ -25,28 +24,34 @@ const LEGALITY_LABELS: Record<string, string> = {
   not_legal: 'Not Legal',
 };
 
-export function CardThumbnail({ card, format, position, onClick, onAdd }: CardThumbnailProps) {
+export function CardThumbnail({ card, format, onClick, onAdd }: CardThumbnailProps) {
   const legality = getLegalityStatus(card, format);
   const legalityColor = LEGALITY_COLORS[legality];
   const imageUrl = getCardImageUri(card, 'normal');
 
+  const handleDragStart = (e: React.DragEvent) => {
+    e.dataTransfer.setData('application/json', JSON.stringify(card));
+    e.dataTransfer.effectAllowed = 'copy';
+  };
+
   return (
-    <div
-      className={`card-zoom-container card-zoom-${position} group relative cursor-pointer`}
-    >
-      {/* Card image with zoom */}
+    <div className="group relative cursor-pointer">
+      {/* Card image */}
       <div
-        className="relative overflow-visible"
+        className="relative"
+        draggable
+        onDragStart={handleDragStart}
         onClick={onClick}
       >
         <img
           src={imageUrl}
           alt={card.name}
-          className="card-zoom-img w-full rounded-lg border border-zinc-700 group-hover:border-amber-500/50 transition-colors"
+          className="w-full rounded-lg border border-zinc-700 group-hover:border-amber-500/50 transition-colors"
           onError={(e) => {
             (e.target as HTMLImageElement).src = 'https://cards.scryfall.io/back.jpg';
           }}
           loading="lazy"
+          draggable={false}
         />
 
         {/* Add button overlay */}
@@ -60,6 +65,11 @@ export function CardThumbnail({ card, format, position, onClick, onAdd }: CardTh
         >
           <Plus size={14} />
         </button>
+
+        {/* Drag hint */}
+        <div className="absolute bottom-2 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+          <span className="text-xs bg-black/70 text-zinc-300 px-2 py-0.5 rounded">drag to deck</span>
+        </div>
       </div>
 
       {/* Card name + legality */}

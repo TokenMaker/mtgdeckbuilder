@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Trash2, BarChart2, List } from 'lucide-react';
 import { useDeckContext } from '../../context/DeckContext';
+import type { ScryfallCard } from '../../utils/formatRules';
 import { groupDeckCards } from '../../utils/cardGrouping';
 import { getCardImageUri } from '../../utils/formatRules';
-import type { ScryfallCard } from '../../utils/formatRules';
 import { DeckGroup } from './DeckGroup';
 import { DeckStats } from './DeckStats';
 import { ManaCurveChart } from './ManaCurveChart';
@@ -20,6 +20,7 @@ export function DeckPanel({ onCardClick }: DeckPanelProps) {
     commander,
     format,
     totalCards,
+    addCard,
     removeCard,
     updateQuantity,
     setCommander,
@@ -28,6 +29,31 @@ export function DeckPanel({ onCardClick }: DeckPanelProps) {
   } = useDeckContext();
 
   const [tab, setTab] = useState<'list' | 'stats'>('list');
+  const [isDragOver, setIsDragOver] = useState(false);
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    // Only clear if leaving the panel entirely (not a child element)
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setIsDragOver(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragOver(false);
+    try {
+      const card = JSON.parse(e.dataTransfer.getData('application/json')) as ScryfallCard;
+      if (card?.id) addCard(card, 1);
+    } catch {
+      // ignore malformed drag data
+    }
+  };
   const grouped = groupDeckCards(mainboard);
   const sideboardCards = Object.values(sideboard);
   const hasSideboard = sideboardCards.length > 0;
@@ -36,7 +62,12 @@ export function DeckPanel({ onCardClick }: DeckPanelProps) {
   const isValid = validationErrors.filter(e => e.type === 'error').length === 0 && totalCards >= maxSize;
 
   return (
-    <div className="flex flex-col h-full">
+    <div
+      className={`flex flex-col h-full transition-colors ${isDragOver ? 'ring-2 ring-amber-500/50 ring-inset bg-amber-500/5' : ''}`}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
       {/* Header */}
       <div className="flex items-center justify-between px-3 py-2.5 border-b border-zinc-800 flex-shrink-0">
         <div>
