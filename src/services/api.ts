@@ -152,9 +152,34 @@ export const matchesApi = {
 };
 
 // Profile
+export interface ProfileDeck {
+  id: string;
+  name: string;
+  format: string;
+  card_count: number;
+  updated_at: string;
+  is_public: boolean;
+  wins: number;
+  losses: number;
+  draws: number;
+  commander_name?: string | null;
+  commander_image?: string | null;
+}
+
+export interface RecentMatch {
+  id: string;
+  deck_id: string;
+  deck_name: string;
+  result: 'win' | 'loss' | 'draw';
+  opponent_archetype: string;
+  notes: string;
+  played_at: string;
+}
+
 export interface ProfileData {
   username: string;
   joined_at: string;
+  rank: string;
   stats: {
     totalDecks: number;
     totalMatches: number;
@@ -163,26 +188,20 @@ export interface ProfileData {
     draws: number;
     favoriteFormat: string;
   };
-  decks: Array<{
-    id: string;
-    name: string;
-    format: string;
-    card_count: number;
-    updated_at: string;
-    wins: number;
-    losses: number;
-    draws: number;
-  }>;
+  decks: ProfileDeck[];
   winRateHistory: Array<{
     date: string;
     winRate: number;
     matchesPlayed: number;
   }>;
+  recentMatches: RecentMatch[];
 }
 
 export const profileApi = {
   get: (username: string) =>
     request<ProfileData>(`/api/profile/${encodeURIComponent(username)}`),
+  getMe: (token: string) =>
+    request<ProfileData>('/api/profile/me', { token }),
 };
 
 // Chat usage

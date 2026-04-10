@@ -136,13 +136,23 @@ export function BuilderHeader({
         </button>
 
         {isConfigured && user && (
-          <button
-            onClick={onMyDecks}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-zinc-300 hover:text-amber-400 hover:bg-zinc-800 rounded-lg transition-colors"
-          >
-            <FolderOpen size={15} />
-            <span className="hidden sm:block">My Decks</span>
-          </button>
+          <>
+            <Link
+              to="/profile/me"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-zinc-300 hover:text-amber-400 hover:bg-zinc-800 rounded-lg transition-colors"
+              title="My Profile"
+            >
+              <span className="hidden sm:block">Profile</span>
+              <span className="sm:hidden">👤</span>
+            </Link>
+            <button
+              onClick={onMyDecks}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-zinc-300 hover:text-amber-400 hover:bg-zinc-800 rounded-lg transition-colors"
+            >
+              <FolderOpen size={15} />
+              <span className="hidden sm:block">My Decks</span>
+            </button>
+          </>
         )}
 
         <button

@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 
 interface MatchDataPoint {
   date: string;
@@ -13,55 +13,59 @@ interface WinRateChartProps {
 export function WinRateChart({ data }: WinRateChartProps) {
   if (data.length < 2) {
     return (
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-        <h2 className="text-xl font-bold text-zinc-100 mb-4" style={{ fontFamily: 'Cinzel, serif' }}>
-          Win Rate Over Time
-        </h2>
-        <div className="flex items-center justify-center h-32 text-zinc-600 text-sm">
-          Not enough match data to display chart.
+      <div className="bg-[#1e1f27] rounded-2xl p-6">
+        <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest mb-4" style={{ fontFamily: 'Cinzel, serif' }}>
+          Win Rate Trend
+        </h3>
+        <div className="flex items-center justify-center h-28 text-zinc-600 text-sm">
+          Not enough data to display trend.
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6">
-      <h2 className="text-xl font-bold text-zinc-100 mb-6" style={{ fontFamily: 'Cinzel, serif' }}>
-        Win Rate Over Time
-      </h2>
-      <ResponsiveContainer width="100%" height={200}>
-        <LineChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
+    <div className="bg-[#1e1f27] rounded-2xl p-6">
+      <div className="flex items-center justify-between mb-6">
+        <h3 className="text-sm font-bold text-zinc-300 uppercase tracking-widest" style={{ fontFamily: 'Cinzel, serif' }}>
+          Win Rate Trend
+        </h3>
+        <span className="text-xs text-zinc-500">By week</span>
+      </div>
+      <ResponsiveContainer width="100%" height={180}>
+        <LineChart data={data} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
           <XAxis
             dataKey="date"
-            tick={{ fill: '#71717a', fontSize: 11 }}
-            axisLine={{ stroke: '#3f3f46' }}
+            tick={{ fill: '#52525b', fontSize: 10 }}
+            axisLine={false}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: '#71717a', fontSize: 11 }}
-            axisLine={{ stroke: '#3f3f46' }}
-            tickLine={false}
             domain={[0, 100]}
+            tick={{ fill: '#52525b', fontSize: 10 }}
+            axisLine={false}
+            tickLine={false}
             tickFormatter={v => `${v}%`}
           />
+          <ReferenceLine y={50} stroke="#3f3f46" strokeDasharray="4 4" />
           <Tooltip
             contentStyle={{
-              background: '#18181b',
-              border: '1px solid #3f3f46',
-              borderRadius: '8px',
+              background: '#292931',
+              border: 'none',
+              borderRadius: '12px',
               fontSize: '12px',
               color: '#d4d4d8',
+              boxShadow: '0 8px 40px rgba(0,0,0,0.4)',
             }}
             formatter={(value: any) => [`${value}%`, 'Win Rate']}
           />
           <Line
             type="monotone"
             dataKey="winRate"
-            stroke="#f59e0b"
+            stroke="#fbbf24"
             strokeWidth={2}
-            dot={{ fill: '#f59e0b', r: 3 }}
-            activeDot={{ r: 5, fill: '#fbbf24' }}
+            dot={{ fill: '#fbbf24', r: 3, strokeWidth: 0 }}
+            activeDot={{ r: 5, fill: '#fde68a', strokeWidth: 0 }}
           />
         </LineChart>
       </ResponsiveContainer>
