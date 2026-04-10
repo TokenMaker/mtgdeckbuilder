@@ -142,9 +142,23 @@ export function DeckDetailPage() {
         </div>
 
         {/* Match Logger */}
-        {user && token && deckId && (
+        {user && token && deckId && deck && (
           <div className="mb-6">
-            <MatchLogger deckId={deckId} token={token} onLogged={handleLogged} />
+            <MatchLogger
+              decks={[{
+                id: deck.id,
+                name: deck.name,
+                format: deck.format,
+                card_count: deck.card_count,
+                updated_at: deck.updated_at ?? '',
+                is_public: false,
+                wins: 0,
+                losses: 0,
+                draws: 0,
+              }]}
+              token={token}
+              onLogged={handleLogged}
+            />
           </div>
         )}
 
