@@ -37,8 +37,17 @@ export function useScryfall(): UseScryfallReturn {
       setTotalCards(data.total_cards || 0);
       setHasMore(data.has_more || false);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Search failed');
-      setCards([]);
+      const msg = err instanceof Error ? err.message : 'Search failed';
+      // "No cards found" is not an error — just show empty results
+      if (msg.toLowerCase().includes('no cards found')) {
+        setCards([]);
+        setTotalCards(0);
+        setHasMore(false);
+        setError(null);
+      } else {
+        setError(msg);
+        setCards([]);
+      }
     } finally {
       setLoading(false);
     }

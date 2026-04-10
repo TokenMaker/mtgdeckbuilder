@@ -33,12 +33,27 @@ async function rateLimitedFetch(url) {
   return response.json();
 }
 
+/**
+ * If the user typed a plain word/phrase (no Scryfall operators like o:, t:, c:, etc.)
+ * expand it to match both card names and oracle text so keywords like "landfall",
+ * "cascade", "trample", etc. return useful results.
+ */
+function buildScryfallQuery(query) {
+  // Already a structured Scryfall query — pass through as-is
+  if (query.includes(':')) return query;
+
+  // Plain text: wrap multi-word phrases in quotes, then search name OR oracle text
+  const term = query.includes(' ') ? `"${query}"` : query;
+  return `(name:${term} OR o:${term})`;
+}
+
 export async function searchCards(query, page = 1) {
   const cacheKey = `search:${query}:${page}`;
   const cached = cache.get(cacheKey);
   if (cached) return cached;
 
-  const encodedQuery = encodeURIComponent(query);
+  const scryfallQuery = buildScryfallQuery(query);
+  const encodedQuery = encodeURIComponent(scryfallQuery);
   const url = `https://api.scryfall.com/cards/search?q=${encodedQuery}&page=${page}&order=edhrec&unique=cards`;
 
   const data = await rateLimitedFetch(url);

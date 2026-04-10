@@ -28,7 +28,7 @@ export function CardSearchBar({ onSearch, loading }: CardSearchBarProps) {
           type="text"
           value={query}
           onChange={e => setQuery(e.target.value)}
-          placeholder="Search cards... (e.g. lightning bolt, t:creature c:r)"
+          placeholder="Search by name or keyword (e.g. landfall, flying, t:creature c:r)"
           className="w-full bg-zinc-800 border border-zinc-700 focus:border-amber-500/50 text-sm text-zinc-100 placeholder-zinc-500 pl-8 pr-8 py-2 rounded-lg outline-none transition-colors"
         />
         {query && (

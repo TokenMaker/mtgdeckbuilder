@@ -17,8 +17,9 @@ router.get('/search', async (req, res) => {
   } catch (error) {
     console.error('Scryfall search error:', error.message);
 
-    if (error.message?.includes('No cards found')) {
-      return res.status(404).json({ error: 'No cards found', details: error.message });
+    // Scryfall returns 404/422 when nothing matches — surface as a clean empty result
+    if (error.message?.includes('No cards found') || error.message?.includes('404') || error.message?.includes('422')) {
+      return res.status(404).json({ error: 'No cards found for that search', details: error.message });
     }
 
     res.status(500).json({ error: 'Scryfall search failed', details: error.message });
